@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -o errexit -o nounset -o pipefail
+
+timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+rm -rf remote-backup
+mkdir remote-backup
+
+mkdir remote-backup/$timestamp
+pg_dumpall -U postgres > remote-backup/$timestamp/all_databases.sql
+cp /var/lib/redis/dump.rdb remote-backup/$timestamp/
+mkdir -p remote-backup/$timestamp/mastodon/public/system
+cp -r /var/lib/mastodon/public/system/{accounts,media_attachments,site_uploads} remote-backup/$timestamp/mastodon/public/system
+cp /var/lib/mastodon/.env.production remote-backup/$timestamp/mastodon/
+tar -cC remote-backup $timestamp | zstd -9 | age -r $(cat backup-public-key.txt) -o remote-backup/$timestamp.tar.zst.age
+sshpass -f cloud-archive-password.txt rsync -v ./remote-backup/$timestamp.tar.zst.age pca@gateways.storage.gra.cloud.ovh.net:backup/

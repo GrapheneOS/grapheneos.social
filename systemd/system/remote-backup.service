@@ -1,0 +1,34 @@
+[Unit]
+Description=Perform remote backup
+
+[Service]
+CapabilityBoundingSet=CAP_DAC_READ_SEARCH
+CPUSchedulingPolicy=batch
+ExecStart=/usr/local/bin/remote-backup
+LockPersonality=true
+NoNewPrivileges=true
+MemoryDenyWriteExecute=true
+PrivateDevices=true
+PrivateIPC=true
+PrivateTmp=true
+ProcSubset=pid
+ProtectClock=true
+ProtectControlGroups=true
+ProtectHostname=true
+ProtectKernelLogs=true
+ProtectKernelModules=true
+ProtectKernelTunables=true
+ProtectProc=invisible
+ProtectSystem=strict
+RemoveIPC=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@resources @obsolete
+Type=oneshot
+UMask=0077
+User=root
+WorkingDirectory=/root

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -o errexit -o nounset -o pipefail
+
+remote=root@grapheneos.social
+
+timestamp=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+ssh $remote "rm -rf local-backup"
+ssh $remote "mkdir local-backup"
+
+ssh $remote "mkdir local-backup/$timestamp"
+ssh $remote "pg_dumpall -U postgres > local-backup/$timestamp/all_databases.sql"
+ssh $remote "cp /var/lib/redis/dump.rdb local-backup/$timestamp/"
+ssh $remote "mkdir -p local-backup/$timestamp/mastodon/public/system"
+ssh $remote "cp -r /var/lib/mastodon/public/system/{accounts,media_attachments,site_uploads} local-backup/$timestamp/mastodon/public/system"
+ssh $remote "cp /var/lib/mastodon/.env.production local-backup/$timestamp/mastodon/"
+ssh $remote "tar -cC local-backup $timestamp | zstd -9 | age -r \$(cat backup-public-key.txt) -o local-backup/$timestamp.tar.zst.age"
+rsync -v $remote:./local-backup/$timestamp.tar.zst.age backup/
