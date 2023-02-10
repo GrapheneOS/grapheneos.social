@@ -17,6 +17,9 @@ remote=root@grapheneos.social
 
 rsync -rptcv --fsync --chmod=D755,F644 --delete nginx/nginx.conf $remote:/etc/nginx/nginx.conf
 rsync -rptcv --fsync --chmod=D755,F644 --delete nginx/mime.types $remote:/etc/nginx/mime.types
+rsync -ptcv --fsync --chmod=755 remote-backup $remote:/usr/local/bin/remote-backup
+rsync -ptcv --fsync --chmod=644 systemd/system/remote-backup.timer $remote:/etc/systemd/system/remote-backup.timer
+rsync -ptcv --fsync --chmod=644 systemd/system/remote-backup.service $remote:/etc/systemd/system/remote-backup.service
 ssh $remote nginx -s reload
 
 echo
