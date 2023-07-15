@@ -15,8 +15,7 @@ gixy nginx/nginx.conf
 
 remote=root@grapheneos.social
 
-rsync -rptcv --fsync --chmod=D755,F644 --delete nginx/nginx.conf $remote:/etc/nginx/nginx.conf
-rsync -rptcv --fsync --chmod=D755,F644 --delete nginx/mime.types $remote:/etc/nginx/mime.types
+rsync -rptcv --fsync --chmod=D755,F644 --delete nginx/{nginx.conf,mime.types} $remote:/etc/nginx/
 rsync -ptcv --fsync --chmod=755 {local-backup,remote-backup} $remote:/usr/local/bin/
 rsync -rptcv --fsync --chmod=D755,F644 systemd/system/{mastodon-web,mastodon-streaming,redis}.service.d $remote:/etc/systemd/system/
 rsync -ptcv --fsync --chmod=F644 redis/redis.conf $remote:/etc/redis/redis.conf
