@@ -15,12 +15,12 @@ gixy nginx/nginx.conf
 
 remote=root@grapheneos.social
 
-rsync -rptcv --fsync --chmod=D755,F644 --delete nginx/{nginx.conf,mime.types} $remote:/etc/nginx/
-rsync -ptcv --fsync --chmod=755 {local-backup,remote-backup} $remote:/usr/local/bin/
-rsync -rptcv --fsync --chmod=D755,F644 systemd/system/{mastodon-web,mastodon-streaming,redis}.service.d $remote:/etc/systemd/system/
-rsync -ptcv --fsync --chmod=F644 redis/redis.conf $remote:/etc/redis/redis.conf
-rsync -ptcv --fsync --chmod=644 systemd/system/remote-backup.timer $remote:/etc/systemd/system/remote-backup.timer
-rsync -ptcv --fsync --chmod=644 systemd/system/remote-backup.service $remote:/etc/systemd/system/remote-backup.service
+rsync -rptcv --chmod=D755,F644 --delete --fsync --preallocate nginx/{nginx.conf,mime.types} $remote:/etc/nginx/
+rsync -ptcv --chmod=755  --fsync --preallocate {local-backup,remote-backup} $remote:/usr/local/bin/
+rsync -rptcv --chmod=D755,F644  --fsync --preallocate systemd/system/{mastodon-web,mastodon-streaming,redis}.service.d $remote:/etc/systemd/system/
+rsync -ptcv --chmod=F644  --fsync --preallocate redis/redis.conf $remote:/etc/redis/redis.conf
+rsync -ptcv --chmod=644  --fsync --preallocate systemd/system/remote-backup.timer $remote:/etc/systemd/system/remote-backup.timer
+rsync -ptcv --chmod=644  --fsync --preallocate systemd/system/remote-backup.service $remote:/etc/systemd/system/remote-backup.service
 ssh $remote nginx -s reload
 
 echo
