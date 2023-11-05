@@ -22,5 +22,3 @@ rsync -ptcv --chmod=F644  --fsync --preallocate redis/redis.conf $remote:/etc/re
 rsync -ptcv --chmod=644  --fsync --preallocate systemd/system/remote-backup.timer $remote:/etc/systemd/system/remote-backup.timer
 rsync -ptcv --chmod=644  --fsync --preallocate systemd/system/remote-backup.service $remote:/etc/systemd/system/remote-backup.service
 ssh $remote nginx -s reload
-
-echo
