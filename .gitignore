@@ -2,5 +2,6 @@
 /backup-public-key.txt
 /backup/
 /cloud-archive.sh
+/cloud-archive-admin.sh
 /lock
 /venv/
