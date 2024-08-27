@@ -8,7 +8,7 @@ mkdir remote-backup
 
 mkdir remote-backup/$timestamp
 pg_dumpall -U postgres > remote-backup/$timestamp/all_databases.sql
-cp /var/lib/redis/dump.rdb remote-backup/$timestamp/
+cp /var/lib/valkey/dump.rdb remote-backup/$timestamp/
 mkdir -p remote-backup/$timestamp/mastodon/public/system
 cp -r /var/lib/mastodon/public/system/{accounts,media_attachments,site_uploads} remote-backup/$timestamp/mastodon/public/system
 cp /var/lib/mastodon/.env.production remote-backup/$timestamp/mastodon/
