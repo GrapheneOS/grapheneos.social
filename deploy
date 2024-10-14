@@ -18,7 +18,7 @@ remote=root@grapheneos.social
 rsync -rpcv --chmod=D755,F644 --delete --fsync --preallocate nginx/{nginx.conf,mime.types} $remote:/etc/nginx/
 ssh $remote nginx -s reload
 
-rsync -rpcv --chmod=D755,F644 --fsync --preallocate systemd/system/{mastodon-web,mastodon-streaming@,postgresql,valkey}.service.d $remote:/etc/systemd/system/
+rsync -rpcv --delete --chmod=D755,F644 --fsync --preallocate systemd/system/{mastodon-web,mastodon-streaming@,postgresql,valkey}.service.d $remote:/etc/systemd/system/
 rsync -pcv --chmod=F644 --fsync --preallocate valkey/valkey.conf $remote:/etc/valkey/valkey.conf
 ssh $remote usermod mastodon -G valkey
 
