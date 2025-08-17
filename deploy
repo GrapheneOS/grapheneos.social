@@ -11,7 +11,7 @@ if ! flock -n $fd; then
     exit 1
 fi
 
-gixy nginx/nginx.conf
+gixy --skips try_files_is_evil_too nginx/nginx.conf
 
 remote=root@grapheneos.social
 
