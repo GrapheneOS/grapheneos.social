@@ -20,7 +20,7 @@ ssh $remote nginx -s reload
 
 rsync -rpcv --delete --chmod=D755,F644 --fsync --preallocate systemd/system/{mastodon-web,mastodon-streaming@,postgresql,valkey}.service.d $remote:/etc/systemd/system/
 rsync -pcv --chmod=F644 --fsync --preallocate valkey/valkey.conf $remote:/etc/valkey/valkey.conf
-ssh $remote 'usermod -aG valkey mastodon && usermod -aG mastodon http'
+ssh $remote 'usermod -aG valkey mastodon && usermod -aG mastodon http && usermod -aG io_uring postgres'
 
 rsync -pcv --chmod=755 --fsync --preallocate remote-backup $remote:/usr/local/bin/
 rsync -pcv --chmod=644 --fsync --preallocate systemd/system/remote-backup.timer $remote:/etc/systemd/system/remote-backup.timer
