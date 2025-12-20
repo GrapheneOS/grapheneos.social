@@ -9,7 +9,7 @@ ssh $remote "rm -rf local-backup"
 ssh $remote "mkdir local-backup"
 
 ssh $remote "mkdir local-backup/$timestamp"
-ssh $remote "pg_dumpall -U postgres > local-backup/$timestamp/all_databases.sql"
+ssh $remote "pg_basebackup -U postgres -D local-backup/$timestamp/postgres/"
 ssh $remote "cp /var/lib/valkey/dump.rdb local-backup/$timestamp/"
 ssh $remote "mkdir -p local-backup/$timestamp/mastodon/public/system"
 ssh $remote "cp -r /var/lib/mastodon/public/system/{accounts,media_attachments,site_uploads} local-backup/$timestamp/mastodon/public/system"
