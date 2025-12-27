@@ -16,7 +16,7 @@ gixy --skips try_files_is_evil_too nginx/nginx.conf
 remote=root@grapheneos.social
 
 rsync -rpcv --chmod=D755,F644 --delete --fsync --preallocate nginx/{nginx.conf,mime.types} $remote:/etc/nginx/
-ssh $remote nginx -s reload
+ssh $remote systemctl reload nginx
 
 ssh $remote 'mkdir -pm 700 /var/log/mastodon'
 rsync -pcv --chmod=644 --fsync --preallocate syslog-ng/conf.d/mastodon.conf $remote:/etc/syslog-ng/conf.d/mastodon.conf
