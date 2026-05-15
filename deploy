@@ -30,5 +30,6 @@ ssh $remote 'usermod -aG valkey mastodon && usermod -aG mastodon http && usermod
 rsync -pcv --chmod=755 --fsync --preallocate remote-backup $remote:/usr/local/bin/
 rsync -pcv --chmod=644 --fsync --preallocate systemd/system/remote-backup.timer $remote:/etc/systemd/system/remote-backup.timer
 rsync -pcv --chmod=644 --fsync --preallocate systemd/system/remote-backup.service $remote:/etc/systemd/system/remote-backup.service
+ssh $remote systemctl daemon-reload
 rsync -pcv --chmod=644 --fsync --preallocate backup-public-key.txt cloud-archive.sh $remote:
 rsync -pcv --chmod=600 --chown postgres:postgres --fsync --preallocate postgres/data/{pg_hba,pg_ident,postgresql}.conf $remote:/var/lib/postgres/data/
