@@ -2,6 +2,9 @@ name: Lint nginx configuration
 
 on: [pull_request, push]
 
+permissions:
+  contents: read
+
 jobs:
   static:
     runs-on: ubuntu-latest
